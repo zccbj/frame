@@ -1,6 +1,6 @@
 <?php
-namespace app\ctrl;
-class IndexCtrl extends \framework\lib\Controller{
+namespace app\controller;
+class IndexController extends \framework\lib\Controller{
 	public function index(){
 		$a=\framework\lib\Factory::getCache('zcc');
 		$b=\framework\lib\Factory::getCache('zcc');

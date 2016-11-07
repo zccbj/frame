@@ -75,7 +75,9 @@ class Model{
 			if ($key==$this->fields['pk']) {
 				$other=" $key='$value'";
 			}else{
-				$sql.="$key='$value',";
+				if (!is_null($value)) {
+					$sql.="$key='$value',";
+				}	
 			}
 		}
 		$sql=substr($sql, 0,-1);

@@ -21,4 +21,15 @@ class Factory{
 		}
 		return $log;
 	}
+	static function getObj($key){
+		//注册器模式
+		@$obj = Register::get($key);
+		if(!$obj){
+			$class= '\app\model\OBJ\\'.$key.'ObjModel';
+			$obj=new $class;
+			Register::set($key,$obj);
+		}
+		
+		return clone $obj;
+	}
 }

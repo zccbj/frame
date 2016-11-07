@@ -13,7 +13,7 @@ class Framework{
 		define('FRAME_DIR',ROOT_DIR.'framework'.DS);
 		define('APP_DIR',ROOT_DIR.'app'.DS);
 		define('LOG_DIR',ROOT_DIR.'log'.DS);
-		define('CTRL_DIR',APP_DIR.'ctrl'.DS);
+		define('CTRL_DIR',APP_DIR.'controller'.DS);
 		define('VIEW_DIR',APP_DIR.'view'.DS);
 		define('MODEL_DIR',APP_DIR.'model'.DS);
 		define('RUNTIME_DIR',APP_DIR.'runtime'.DS);
@@ -41,9 +41,9 @@ class Framework{
 	private static function dispatch(){
 		$route=new lib\Route();//不加\说明是相对路径下的，相对于当前命名空间.加了\则表示绝对路径
 		$ctrl=$route->ctrl;
-		$action=$route->action;
-		$ctrlClass='\app\\ctrl\\'.$ctrl.'Ctrl';
-		$ctrlFile=CTRL_DIR.$ctrl.'Ctrl.php';
+		$action=$route->action.'Action';
+		$ctrlClass='\app\\controller\\'.$ctrl.'Controller';
+		$ctrlFile=CTRL_DIR.$ctrl.'Controller.php';
 
 		lib\Log::init();//日志
 		if (is_file($ctrlFile)) {
@@ -52,7 +52,8 @@ class Framework{
 
 			lib\Log::log($ctrlClass.'|'.$action,'enter');//日志
 		}else{
-			throw new Exception("Error Not File:".$ctrlFile);
+			// throw new Exception("Error Not File:".$ctrlFile);
+			echo 'Error Not File:'.$ctrlFile;
 			
 		}
 	}

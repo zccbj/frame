@@ -1,4 +1,5 @@
 <?php
+namespace framework\tool;
 class ResponseTool{
 	/**
  * 按json方式输出通信数据

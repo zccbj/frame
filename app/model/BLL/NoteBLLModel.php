@@ -1,0 +1,110 @@
+<?php
+namespace app\model\BLL;
+use app\model\OBJ as OBJ;
+use app\model\DAL as DAL;
+use framework\tool as tool;
+class NoteBLLModel{
+	//封装了得到noteBoardId的值。
+	public function gNoteBoardId($userId){
+		$noteBoardDALModel=new DAL\NoteBoardDALModel;
+		$noteBoardObjFromDb=$noteBoardDALModel->selectByUserId($userId);
+		$noteBoardId=$noteBoardObjFromDb->noteBoardId;
+		return $noteBoardId;
+	}
+	//获取note信息，二维
+	public function infoNote($noteBoardObjFromView){
+		$userId=$noteBoardObjFromView->userId;
+		 $noteBoardId=$this->gNoteBoardId($userId);
+		 if ($noteBoardId==null) {
+		 	return tool\ResponseTool::show(0,'note查询失败',null);
+		 }
+		 $noteNum=$noteBoardId%7;
+		$noteDALModel=new DAL\NoteDALModel;
+		$noteObjArrFromDb=$noteDALModel->selectByNoteBoardId($noteBoardId,$noteNum);
+		
+		$a=tool\ArrToObjTool::objArrToArr($noteObjArrFromDb);
+		return tool\ResponseTool::show(1,'note查询成功',$a);
+		
+	}
+	//获取note信息，一维
+	public function infoNoteById($noteBoardObjFromView,$noteId){
+
+		$userId=$noteBoardObjFromView->userId;
+		$noteBoardId=$this->gNoteBoardId($userId);
+		if ($noteBoardId==null) {
+		 	return tool\ResponseTool::show(0,'note查询失败',null);
+		}
+		$noteNum=$noteBoardId%7;
+
+		$noteDALModel=new DAL\NoteDALModel;
+		$noteObjFromDb=$noteDALModel->selectByNoteId($noteId,$noteNum);
+		if ($noteObjFromDb) {
+			$a=$noteObjFromDb->objToArr();
+			return tool\ResponseTool::show(1,'note查询成功',$a);
+		}else{
+			return tool\ResponseTool::show(0,'note查询失败2',null);
+		}
+		
+	}
+	public function addNote($userId,$noteObjFromView){
+
+		$noteBoardId=$this->gNoteBoardId($userId);
+		$noteNum=$noteBoardId%7;
+
+		if ($noteBoardId==null) {
+		 	return tool\ResponseTool::show(0,'note添加失败',null);
+		}
+
+		if ($noteObjFromView->noteBoardId==null) {
+			//不传noteboardid
+			$noteObjFromView->noteBoardId=$noteBoardId;
+		}else if($noteObjFromView->noteBoardId!=$noteBoardId){
+			//id与useid不匹配
+			return tool\ResponseTool::show(0,'note添加失败,noteBoardId错误',null);
+		}
+		$noteObjArr=$noteObjFromView->objToArr();
+		$noteObjArr['noteBoardId']=$noteBoardId;
+		$noteDALModel=new DAL\NoteDALModel;
+		$noteObjFromDb=$noteDALModel->insertNote($noteObjArr,$noteNum);
+
+		if ($noteObjFromDb) {
+	      	return tool\ResponseTool::show(1,'note添加成功',$noteObjFromDb->objToArr());
+		}else{
+			return tool\ResponseTool::show(403,'note添加失败',null);
+	
+		}
+	}
+	public function modifyNote($noteObjFromView){
+
+		$noteObjArr=$noteObjFromView->objToArr();
+		$noteBoardId=$noteObjArr['noteBoardId'];
+		$noteNum=$noteBoardId%7;
+		$noteDALModel=new DAL\NoteDALModel;
+		$noteObjFromDb=$noteDALModel->updateByNoteArr($noteObjArr,$noteNum);
+		
+		if ($noteObjFromDb) {
+
+			return tool\ResponseTool::show(1,'note修改成功',$noteObjFromDb->objToArr());
+		}else{
+			return tool\ResponseTool::show(0,'note修改失败',$noteObjFromDb->objToArr());
+		}
+			
+	
+		
+		
+	}
+	public function delNote($userId,$noteObjFromView){
+		$noteBoardId=$this->gNoteBoardId($userId);
+		$noteNum=$noteBoardId%7;
+		$noteId=$noteObjFromView->noteId;
+		$noteDALModel=new DAL\NoteDALModel;
+		$sign=$noteDALModel->delByNoteId($noteId,$noteNum);
+		if ($sign) {
+			return tool\ResponseTool::show(1,'note删除成功',null);
+	
+
+		}else{
+			return tool\ResponseTool::show(404,'note删除失败',null);		}
+
+	}
+}

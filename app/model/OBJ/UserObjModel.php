@@ -1,20 +1,18 @@
 <?php
-namespace app\model;
+namespace app\model\OBJ;
 class UserObjModel{
 	private $userId;
 	private $nickName;
-	private $userIntro;
+	private $telNumber;
 	private $account;
 	private $password;
 	private $gender;
-//	private $collegeId;
-//	private $characterId;
-	private $headimgURL;
-	private $openId;
-//	private $headimg;
-	private $EmailAddress;
 	private $age;
 	private $emotionStatus;
+	private $userIntro;
+	private $headimgURL;
+	private $openId;
+	private $EmailAddress;
 	private $addCountry;
 	private $addProvince;
 	private $addCity;
@@ -28,13 +26,18 @@ class UserObjModel{
 			return NULL;
 		}
 	}
-
-
 	public function __construct($arr=NULL){
-		foreach ($arr as $key => $value) {
+		if (!empty($arr)) {
+			foreach ($arr as $key => $value) {
 			$this->$key=$value;
+			}
 		}
-
 	}
+	public function ObjToArr() {	  
+	    foreach ($this as $key => $value) {
+	      $array[$key] = $value;
+	    }
 
+	  return $array;
+	}
 }
