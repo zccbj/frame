@@ -15,7 +15,7 @@ class NoteBoardBLLModel{
 			return tool\ResponseTool::show(1,'noteBoard查询成功',$noteBoardObjFromDbArr);
 		
 		}else{
-			return tool\ResponseTool::show(0,'noteBoard查询失败',$noteBoardObjFromDb);
+			return tool\ResponseTool::show(408,'noteBoard查询失败',$noteBoardObjFromDb);
 		
 		}
 		
@@ -31,7 +31,7 @@ class NoteBoardBLLModel{
 			return tool\ResponseTool::show(1,'noteBoard修改成功',$noteBoardObjFromDbArr->objToArr());
 		
 		}else{
-			return tool\ResponseTool::show(0,'noteBoard修改失败',$noteBoardObjFromDb);
+			return tool\ResponseTool::show(409,'noteBoard修改失败',$noteBoardObjFromDb);
 		
 		}
 		

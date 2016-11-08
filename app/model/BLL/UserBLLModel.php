@@ -5,33 +5,6 @@ use app\model\DAL as DAL;
 use framework\tool as tool;
 class UserBLLModel{
 
-	// public function NoteBoardObj_Arr($noteBoardObj){
-	// 	$noteBoardObjArr=array();
-	// 	$noteBoardObjArr['noteBoardId']=$noteBoardObj->noteBoardId;
-	// 	$noteBoardObjArr['userId']=$noteBoardObj->userId;
-	// 	$NoteBoardObj_Arr['boardBackGroundId']=$noteBoardObj->boardBackGroundId;
-	// 	return $noteBoardObjArr;
-	// }
-	// public function NoteObj_Arr($noteObj){
-	// 	$noteArr=array();
-	// $noteArr['noteId']=$noteObj->noteId;
-	// $noteArr['noteStatus']=$noteObj->noteStatus;
-	// $noteArr['pictureURL']=$noteObj->pictureURL;
-	// $noteArr['boolPicture']=$noteObj->boolPicture;
-	// $noteArr['noteDateTime']=$noteObj->noteDateTime;
-	// $noteArr['noteContent']=$noteObj->noteContent;
-	// $noteArr['boolUrgent']=$noteObj->boolUrgent;
-	// $noteArr['voiceURL']=$noteObj->voiceURL;
-	// $noteArr['boolVoice']=$noteObj->boolVoice;
-	// $noteArr['noteBoardId']=$noteObj->noteBoardId;
-	// $noteArr['noteTypeId']=$noteObj->noteTypeId;
-
-	// 		$noteObjArr['boolOpen']=$noteObj->boolOpen;
-	// 	$noteObjArr['noteUpdateTime']=$noteObj->noteUpdateTime;
-	// 	$noteObjArr['likeCount']=$noteObj->likeCount;
-	// 	return $noteArr;
-	// }
-
 	//提取代码。注册时默认在NoteBoard添加数据
 	private function addNoteBoard($userFromDb){
 		$userId=$userFromDb->userId;

@@ -16,7 +16,7 @@ class NoteBLLModel{
 		$userId=$noteBoardObjFromView->userId;
 		 $noteBoardId=$this->gNoteBoardId($userId);
 		 if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(0,'note查询失败',null);
+		 	return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		 }
 		 $noteNum=$noteBoardId%7;
 		$noteDALModel=new DAL\NoteDALModel;
@@ -32,7 +32,7 @@ class NoteBLLModel{
 		$userId=$noteBoardObjFromView->userId;
 		$noteBoardId=$this->gNoteBoardId($userId);
 		if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(0,'note查询失败',null);
+		 	return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		}
 		$noteNum=$noteBoardId%7;
 
@@ -42,7 +42,7 @@ class NoteBLLModel{
 			$a=$noteObjFromDb->objToArr();
 			return tool\ResponseTool::show(1,'note查询成功',$a);
 		}else{
-			return tool\ResponseTool::show(0,'note查询失败2',null);
+			return tool\ResponseTool::show(410,'note查询失败2',null);
 		}
 		
 	}
@@ -52,7 +52,7 @@ class NoteBLLModel{
 		$noteNum=$noteBoardId%7;
 
 		if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(0,'note添加失败',null);
+		 	return tool\ResponseTool::show(410,'noteBoardId寻找失败',null);
 		}
 
 		if ($noteObjFromView->noteBoardId==null) {
@@ -60,7 +60,7 @@ class NoteBLLModel{
 			$noteObjFromView->noteBoardId=$noteBoardId;
 		}else if($noteObjFromView->noteBoardId!=$noteBoardId){
 			//id与useid不匹配
-			return tool\ResponseTool::show(0,'note添加失败,noteBoardId错误',null);
+			return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		}
 		$noteObjArr=$noteObjFromView->objToArr();
 		$noteObjArr['noteBoardId']=$noteBoardId;
@@ -70,7 +70,7 @@ class NoteBLLModel{
 		if ($noteObjFromDb) {
 	      	return tool\ResponseTool::show(1,'note添加成功',$noteObjFromDb->objToArr());
 		}else{
-			return tool\ResponseTool::show(403,'note添加失败',null);
+			return tool\ResponseTool::show(411,'note添加失败',null);
 	
 		}
 	}
@@ -86,7 +86,7 @@ class NoteBLLModel{
 
 			return tool\ResponseTool::show(1,'note修改成功',$noteObjFromDb->objToArr());
 		}else{
-			return tool\ResponseTool::show(0,'note修改失败',$noteObjFromDb->objToArr());
+			return tool\ResponseTool::show(412,'note修改失败',$noteObjFromDb->objToArr());
 		}
 			
 	
@@ -104,7 +104,7 @@ class NoteBLLModel{
 	
 
 		}else{
-			return tool\ResponseTool::show(404,'note删除失败',null);		}
+			return tool\ResponseTool::show(413,'note删除失败',null);		}
 
 	}
 }
