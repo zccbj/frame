@@ -31,6 +31,16 @@ class UserDALModel extends lib\Model{
 			return NULL;
 		}
 	}
+	public function checkBytelNumber($telNumber){
+		$sql="select * from {$this->table()} where telNumber='$telNumber' ";
+		$User_info=$this->db->fetchRow($sql);
+		if ($User_info) {
+			$user=tool\ArrToObjTool::arrToObj($User_info,'User');
+			return $user;
+		}else{
+			return NULL;
+		}
+	}
 	//通过useid来查询。返回对象
 	public function SelectByUserId($userId){
 
@@ -38,13 +48,11 @@ class UserDALModel extends lib\Model{
 			return tool\ArrToObjTool::arrToObj($message,'User');
 		}
 	}
-	//pc注册，返回的对象
-	public function InsertByUser($userArr){
-		if($this->checkByaccount($userArr['account'])){
-				return false;
-		}
+	//iphone注册telNumber
+	public function InsertByUserTel($userArr){
+	
 		if ($message=$this->autoInsert($userArr)) {
-			$user=$this->checkByaccount($userArr['account']);
+			$user=$this->checkBytelNumber($userArr['telNumber']);
 			return $user;
 		}
 

@@ -1,5 +1,5 @@
 <?php
-namespace app\model;
+namespace app\model\OBJ;
 class VerificationObjModel{
 	private $verificationId;
 	private $telNumber;
@@ -18,10 +18,19 @@ class VerificationObjModel{
 
 
 	public function __construct($arr=NULL){
-		foreach ($arr as $key => $value) {
+		if (!empty($arr)) {
+			foreach ($arr as $key => $value) {
 			$this->$key=$value;
+			}
 		}
 
+	}
+	public function ObjToArr() {	  
+	    foreach ($this as $key => $value) {
+	      $array[$key] = $value;
+	    }
+
+	  return $array;
 	}
 
 }

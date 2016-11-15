@@ -78,20 +78,20 @@ class UserBLLModel{
 	 */
 	public function registerPc($userFromView){
 		$message;
-		$userDALModel=new UserDALModel;
-		$userFromDb=$userDALModel->InsertByUser($this->userObj_Arr($userFromView));
-		if ($userFromDb) {
+		$userDALModel=new DAL\UserDALModel;
+		$you=$userDALModel->checkBytelNumber($userFromView->telNumber);
+		if (!$you) {
+			$userFromDb=$userDALModel->InsertByUserTel($userFromView->objToArr());
 			//在noteBoard里插入数据
 			$noteBoardObjFromDb=$this->addNoteBoard($userFromDb);
 			//在note里添加数据
 			$noteObjFromDbArr=$this->addNote($noteBoardObjFromDb);
-			return ResponseTool::show(1,'pc注册成功',$this->userObj_Arr($userFromDb));
+			return tool\ResponseTool::show(1,'pc注册成功',$userFromDb->objToArr());
 		}else{
-			return ResponseTool::show(401,'用户已存在',NULL);
+			return tool\ResponseTool::show(401,'用户已存在tel',NULL);
 		}
 
-	//	return $this->userArr_json($this->userObj_Arr($userFromDb),$error);
-
+	
 	}
 	//修改用户全部信息或修改单个信息
 	public function modifyUser($userFromView){
@@ -117,6 +117,18 @@ class UserBLLModel{
 		}
 		
 	//	return $this->userArr_json($this->userObj_Arr($userFromDb));
+	}
+	//通过usertel查用户信息
+	public function infoUserBytel($userFromView){
+		$userDALModel=new DAL\UserDALModel;
+		$userFromDb=$userDALModel->checkBytelNumber($userFromView->telNumber);
+		if ($userFromDb) {
+			return tool\ResponseTool::show(1,'user已存在',$userFromDb->objToArr());
+		}else{
+			//查无此人
+			return tool\ResponseTool::show(405,'此用户不存在',NULL);
+		}
+		
 	}
 
 }

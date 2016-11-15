@@ -1,0 +1,3 @@
+2016-11-14 22-09-15"insert into `verification` (`verificationId`, `telNumber`, `verificationNumber`, `createTime`) values ('', '\"15566808371\"', '637204', '2016-11-14 22:09:14')|Duplicate entry '0' for key 'PRIMARY'"
+2016-11-14 22-09-26"insert into `verification` (`verificationId`, `telNumber`, `verificationNumber`, `createTime`) values ('', '\"15566808371\"', '536122', '2016-11-14 22:09:25')|Duplicate entry '0' for key 'PRIMARY'"
+2016-11-14 22-09-45"insert into `verification` (`verificationId`, `telNumber`, `verificationNumber`, `createTime`) values ('', '15566808371', '213441', '2016-11-14 22:09:44')|Duplicate entry '0' for key 'PRIMARY'"

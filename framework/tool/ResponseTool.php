@@ -9,6 +9,7 @@ class ResponseTool{
   *@praram iterger $type 数据类型
  *return string 
  */
+	//我在这把他改成return。本来是echo
 	public static function show($code,$message='',$data=array(),$type='json'){
 		//保证只有一个入口
 		if (!is_numeric($code)) {
@@ -20,14 +21,14 @@ class ResponseTool{
 			'data'=>$data
 		);
 		if($type=='json'){
-			self::json($code,$message,$data);
+		 return	self::json($code,$message,$data);
 			exit();
 		}elseif ($type=='array') {
 			//相当于调试模式
 			var_dump($result);
 			exit();
 		}elseif ($type=='xml') {
-			self::xml($code,$message,$data);
+		return	self::xml($code,$message,$data);
 			exit();
 		}else{
 			exit();
@@ -51,7 +52,7 @@ class ResponseTool{
 			'data'=>$data
 		);
 		
-		echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		return json_encode($result,JSON_UNESCAPED_UNICODE);
 		//echo self::JSON2($result);
 
 	}
@@ -76,7 +77,7 @@ class ResponseTool{
 		$xml.="<root>";
 		$xml.=self::xmlToEncode($result);
 		$xml.="</root>";
-		echo $xml;
+		return $xml;
 
 	}
 	/**

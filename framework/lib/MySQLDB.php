@@ -44,8 +44,8 @@ class MySQLDB{
 		$this->last_sql=$sql;
 		$result=mysqli_query($this->link,$sql);
 		if($result===false){
-			lib\Log::init();//日志
-			lib\Log::log($sql.'|'.mysqli_error($this->link));//日志
+			Log::init();//日志
+			Log::log($sql.'|'.mysqli_error($this->link));//日志
 			echo "sql错误";
 			echo "出错sql:",$sql;
 			echo '错误代码是：', mysqli_errno($this->link), '<br>';

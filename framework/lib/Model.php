@@ -7,7 +7,7 @@ class Model{
 	protected $fields;//所有的字段＋一个pri字段
 	public function __construct() {
 		//连接数据库
-		$this->dbConfig=conf::all('database');
+		$this->dbConfig=Conf::all('database');
 		$this->initLink();
 		$this->getFields();
 	}

@@ -45,12 +45,12 @@ class Framework{
 		$ctrlClass='\app\\controller\\'.$ctrl.'Controller';
 		$ctrlFile=CTRL_DIR.$ctrl.'Controller.php';
 
-		lib\Log::init();//日志
+		//lib\Log::init();//日志
 		if (is_file($ctrlFile)) {
 			$ctrl=new $ctrlClass;
 			$ctrl->$action();
 
-			lib\Log::log($ctrlClass.'|'.$action,'enter');//日志
+			//lib\Log::log($ctrlClass.'|'.$action,'enter');//日志
 		}else{
 			// throw new Exception("Error Not File:".$ctrlFile);
 			echo 'Error Not File:'.$ctrlFile;

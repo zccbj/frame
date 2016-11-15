@@ -12,7 +12,7 @@ use framework\lib as lib;
 			$boardBackGroundArr=$this->db->fetchAll($sql);
 			//return $boardBackGroundArr;
 			
-			$objArr=tool\ArrToObjTool::arr2ToObj($boardBackGroundArr,'boardBackGround');
+			$objArr=tool\ArrToObjTool::arr2ToObj($boardBackGroundArr,'BoardBackGround');
 
 			return $objArr;
 		}

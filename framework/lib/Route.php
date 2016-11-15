@@ -35,8 +35,8 @@ class Route{
 			}
 		}else{
 			//contrl和action都没输入，则执行这个
-			$this->ctrl=conf::get('CTRL','route');
-			$this->action=conf::get('ACTION','route');
+			$this->ctrl=Conf::get('CTRL','route');
+			$this->action=Conf::get('ACTION','route');
 		}
 	}
 
