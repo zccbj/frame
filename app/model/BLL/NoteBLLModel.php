@@ -76,6 +76,7 @@ class NoteBLLModel{
 	}
 	public function modifyNote($noteObjFromView){
 
+
 		$noteObjArr=$noteObjFromView->objToArr();
 		$noteBoardId=$noteObjArr['noteBoardId'];
 		$noteNum=$noteBoardId%7;
@@ -86,7 +87,7 @@ class NoteBLLModel{
 
 			return tool\ResponseTool::show(1,'note修改成功',$noteObjFromDb->objToArr());
 		}else{
-			return tool\ResponseTool::show(412,'note修改失败',$noteObjFromDb->objToArr());
+			return tool\ResponseTool::show(412,'note修改失败',null);
 		}
 			
 	

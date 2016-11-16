@@ -17,6 +17,8 @@ namespace app\model\OBJ;
 	private $noteBoardId;
 	private $noteTypeId;
 	private $likeCount;
+	private $locationTop;
+	private $locationLeft;
 
 	public function __set($key,$value){
 		$this->$key=$value;

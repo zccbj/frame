@@ -45,6 +45,7 @@ class NoteDALModel extends lib\Model{
 	public function updateByNoteArr($noteObjArr,$noteNum){
 		$this->table_name='note'.$noteNum;
 		$noteId=$noteObjArr['noteId'];
+
 		if ($message=$this->autoUpdate($noteObjArr)) {
 			$noteObjFromDb=$this->selectByNoteId($noteId,$noteNum);
 			return $noteObjFromDb;
