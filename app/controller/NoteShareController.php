@@ -7,7 +7,8 @@ class NoteShareController extends \framework\lib\Controller{
 	public function gNoteAction(){
 			$noteStart;
 			$noteNum;
-			$useId;
+			$noteBLLModel=new BLL\NoteBLLModel();
+			$a=$NoteBLLModel->infoNote();
 		}
 	
 }

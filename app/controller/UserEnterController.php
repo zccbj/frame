@@ -2,6 +2,7 @@
 namespace app\controller;
 use app\model\OBJ as OBJ;
 use app\model\BLL as BLL;
+use framework\tool as tool;
 class UserEnterController extends \framework\lib\Controller{
 		/**wx、pc用户登入
 	 * 参数:wehcat,openId,headimgURL,nickName,addCountry,addProvice,addCity,
@@ -24,8 +25,8 @@ class UserEnterController extends \framework\lib\Controller{
 				$userFromView->addProvince=$addProvince;
 				$userFromView->addCity=$addCity;
 				$userBLLModel=new BLL\UserBLLModel;
-				$result=$userBLLModel->signWc($userFromView);
-				echo $result;
+				$userObj=$userBLLModel->signWc($userFromView);
+				echo tool\ResponseTool::show(1,'微信登入成功',$userObj->objToArr());;
 		}elseif($from=='pc') {
 			$account=$_POST['account'];
 			$password=$_POST['password'];
@@ -33,8 +34,12 @@ class UserEnterController extends \framework\lib\Controller{
 			$userFromView->account=$account;
 			$userFromView->password=md5($password);
 			$userBLLModel=new BLL\UserBLLModel;
-			$result=$userBLLModel->signPc($userFromView);
-			echo $result;
+			$user=$userBLLModel->signPc($userFromView);
+			if ($user) {
+				echo  tool\ResponseTool::show(1,'pc登入成功',$user->objToArr());
+			}else{
+				echo tool\ResponseTool::show(402,'pc登入失败',NULL);
+			}
 		}
 	}
 	/**
@@ -43,15 +48,7 @@ class UserEnterController extends \framework\lib\Controller{
 	 *
 	 */
 	public function registerIphoneAction(){
-		//手机注册
-		// $account=$_POST['account'];
-		// $password=$_POST['password'];
-		// $userFromView=new UserObjModel;
-		// $userFromView->account=$account;
-		// $userFromView->password=md5($password);
-		// $userBLLModel=new UserBLLModel;
-		// $result=$userBLLModel->registerPc($userFromView);
-		// echo $result;
+
 	}
 	public function registerWebAction(){
 		//邮箱注册

@@ -5,20 +5,6 @@ use app\model\DAL as DAL;
 use framework\tool as tool;
 class VerificationBLLModel{
 	public function sendAndAdd($verificationObjFromView){
-		$user=new OBJ\UserObjModel();
-				$user->telNumber=$verificationObjFromView->telNumber;
-				$userBLL=new UserBLLModel();
-				$result=$userBLL->infoUserBytel($user);
-				$a=json_decode($result);
-if ($a->sign==1) {
-	$a->sign=417;
-	$result=json_encode($a,JSON_UNESCAPED_UNICODE);
-	//说明这个用户已存在
-	return $result;
-
-}
-
-
 		$tel=$verificationObjFromView->telNumber;
 		$num=mt_rand(100000,999999);
 		$verificationObjFromView->verificationNumber=$num;
@@ -51,8 +37,8 @@ if ($a->sign==1) {
 		}else{
 			$verificatObjFromDb=$verificationDAL->insertMessage($verificationArr);
 		}
-		
-		return tool\ResponseTool::show(1,'send message ok',$verificatObjFromDb->objToArr());
+		return $verificatObjFromDb;
+	//	return tool\ResponseTool::show(1,'send message ok',$verificatObjFromDb->objToArr());
 
 
 	}
@@ -66,26 +52,18 @@ if ($a->sign==1) {
 
 		if (strtotime("$theTime +20 minute")<strtotime("now")) {
 			//超出了有效时间
-			return tool\ResponseTool::show(415,'timeout verification',null);
+			//return tool\ResponseTool::show(415,'timeout verification',null);
+			return null;
 		}else{
 			if ($verificationObjFromView->verificationNumber!=$message) {
 				//验证错误
-				return tool\ResponseTool::show(416,'fault verification',null);
+				//return tool\ResponseTool::show(416,'fault verification',null);
+				return null;
 			}
 			else{
-				//验证成功，对用户进行添加
-					$user=new OBJ\UserObjModel();
-					$user->telNumber=$verificatObjFromDb->telNumber;
-					$userBLL=new UserBLLModel();
-					$result=$userBLL->registerPc($user);
-					$a=json_decode($result);
-				if ($a->sign!=1) {
-					return $result;
-				}else{
-					return tool\ResponseTool::show(1,'success verification',$verificatObjFromDb->objToArr());
+				return $verificatObjFromDb;
+				//return tool\ResponseTool::show(1,'success verification',$verificatObjFromDb->objToArr());
 
-				}
-				
 			}
 		}
 

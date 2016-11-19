@@ -8,14 +8,15 @@ use framework\tool as tool;
 
 		$boardBackGroundDALModel=new DAL\BoardBackGroundDALModel;
 		$arrObjFromDb=$boardBackGroundDALModel->selectByNo();
-		if ($arrObjFromDb) {
-			$arr2=tool\ArrToObjTool::objArrToArr($arrObjFromDb);
-			$a=tool\ResponseTool::show(1,'noteBoardGround查询成功',$arr2);
+		return $arrObjFromDb;
+		// if ($arrObjFromDb) {
+		// 	$arr2=tool\ArrToObjTool::objArrToArr($arrObjFromDb);
+		// 	$a=tool\ResponseTool::show(1,'noteBoardGround查询成功',$arr2);
 			
-		}else{
-			return tool\ResponseTool::show(407,'noteBoardGround查询失败',$arrFromDb);
+		// }else{
+		// 	return tool\ResponseTool::show(407,'noteBoardGround查询失败',$arrFromDb);
 		
-		}
+		// }
 		
 	} 
 }

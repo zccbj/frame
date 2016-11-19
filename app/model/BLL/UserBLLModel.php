@@ -46,37 +46,39 @@ class UserBLLModel{
 		$userFromDb=new OBJ\UserObjModel;
 		$userFromDb=$userDALModel->checkByOpenId($userFromView->openId);
 		if ($userFromDb) {
-			$userarr=$userFromDb->objToArr();
+		//	$userarr=$userFromDb->objToArr();
 		}else{
 			//没找到这个用户则insert
 			 $userFromDb=$userDALModel->InsertByUserWc($userFromView->objToArr());
-			 $userarr=$userFromDb->objToArr();
+			 // $userarr=$userFromDb->objToArr();
 			//在noteBoard里插入数据
 			$noteBoardObjFromDb=$this->addNoteBoard($userFromDb);
 			//在note里添加数据
 			$noteObjFromDbArr=$this->addNote($noteBoardObjFromDb);
 
 		}
-		return tool\ResponseTool::show(1,'微信登入成功',$userarr);
+		//return tool\ResponseTool::show(1,'微信登入成功',$userarr);
+		return $userFromDb;
 	}
 	//pc登入
 	public function signPc($userFromView){
 		$userDALModel=new DAL\UserDALModel;
 		$userFromDb=new OBJ\UserObjModel;
 		$userFromDb=$userDALModel->checkByAccount($userFromView->account);
-		$userarr=($userFromDb->password==$userFromView->password)?$userFromDb->objToArr():NULL;
-		if ($userarr) {
-			return tool\ResponseTool::show(1,'pc登入成功',$userarr);
-		}else{
-			return tool\ResponseTool::show(402,'pc登入失败',NULL);
-		}
+		$userObj=($userFromDb->password==$userFromView->password)?$userFromDb:NULL;
+		return $userObj;
+		// if ($userarr) {
+		// 	return tool\ResponseTool::show(1,'pc登入成功',$userarr);
+		// }else{
+		// 	return tool\ResponseTool::show(402,'pc登入失败',NULL);
+		// }
 
 	}
 	/**pc注册
 	 * 用户已存在，则返回false。
 	*	用户不存在，则返回数组
 	 */
-	public function registerPc($userFromView){
+	public function registerTel($userFromView){
 		$message;
 		$userDALModel=new DAL\UserDALModel;
 		$you=$userDALModel->checkBytelNumber($userFromView->telNumber);
@@ -86,9 +88,11 @@ class UserBLLModel{
 			$noteBoardObjFromDb=$this->addNoteBoard($userFromDb);
 			//在note里添加数据
 			$noteObjFromDbArr=$this->addNote($noteBoardObjFromDb);
-			return tool\ResponseTool::show(1,'pc注册成功',$userFromDb->objToArr());
+			return $userFromDb;
+			//return tool\ResponseTool::show(1,'pc注册成功',$userFromDb->objToArr());
 		}else{
-			return tool\ResponseTool::show(401,'用户已存在tel',NULL);
+			return null;
+			//return tool\ResponseTool::show(401,'用户已存在tel',NULL);
 		}
 
 	
@@ -97,24 +101,25 @@ class UserBLLModel{
 	public function modifyUser($userFromView){
 		$userDALModel=new DAL\UserDALModel;
 		$userFromDb=$userDALModel->ModifyByUser($userFromView->objToArr());
-		
-		if ($userFromDb) {
-			return tool\ResponseTool::show(1,'user修改成功',$userFromDb->objToArr());
-		}else{
-			return tool\ResponseTool::show(406,'修改失败',NULL);
-		}
+		return $userFromDb;
+		// if ($userFromDb) {
+		// 	return tool\ResponseTool::show(1,'user修改成功',$userFromDb->objToArr());
+		// }else{
+		// 	return tool\ResponseTool::show(406,'修改失败',NULL);
+		// }
 		
 	}
 	//通过userid查用户信息
 	public function infoUser($userFromView){
 		$userDALModel=new DAL\UserDALModel;
 		$userFromDb=$userDALModel->SelectByUserId($userFromView->userId);
-		if ($userFromDb) {
-			return tool\ResponseTool::show(1,'user查询成功',$userFromDb->objToArr());
-		}else{
-			//查无此人
-			return tool\ResponseTool::show(405,'此用户不存在',NULL);
-		}
+		return $userFromDb;
+		// if ($userFromDb) {
+		// 	return tool\ResponseTool::show(1,'user查询成功',$userFromDb->objToArr());
+		// }else{
+		// 	//查无此人
+		// 	return tool\ResponseTool::show(405,'此用户不存在',NULL);
+		// }
 		
 	//	return $this->userArr_json($this->userObj_Arr($userFromDb));
 	}
@@ -122,12 +127,13 @@ class UserBLLModel{
 	public function infoUserBytel($userFromView){
 		$userDALModel=new DAL\UserDALModel;
 		$userFromDb=$userDALModel->checkBytelNumber($userFromView->telNumber);
-		if ($userFromDb) {
-			return tool\ResponseTool::show(1,'user已存在',$userFromDb->objToArr());
-		}else{
-			//查无此人
-			return tool\ResponseTool::show(405,'此用户不存在',NULL);
-		}
+		return $userFromDb;
+		// if ($userFromDb) {
+		// 	return tool\ResponseTool::show(1,'user已存在',$userFromDb->objToArr());
+		// }else{
+		// 	//查无此人
+		// 	return tool\ResponseTool::show(405,'此用户不存在',NULL);
+		// }
 		
 	}
 

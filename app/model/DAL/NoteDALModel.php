@@ -34,7 +34,7 @@ class NoteDALModel extends lib\Model{
 	}
 
 
-		//返回二维数组
+		//返回二维数组obj
 	public function selectByNoteBoardId($noteBoardId,$noteNum){
 		$this->table_name='note'.$noteNum;
 		$sql=$this->from($this->table_name)->where("noteBoardId='$noteBoardId'")->select();

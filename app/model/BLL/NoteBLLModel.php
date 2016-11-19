@@ -16,14 +16,17 @@ class NoteBLLModel{
 		$userId=$noteBoardObjFromView->userId;
 		 $noteBoardId=$this->gNoteBoardId($userId);
 		 if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
+		 	return null;
+		 	// return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		 }
 		 $noteNum=$noteBoardId%7;
 		$noteDALModel=new DAL\NoteDALModel;
 		$noteObjArrFromDb=$noteDALModel->selectByNoteBoardId($noteBoardId,$noteNum);
-		
-		$a=tool\ArrToObjTool::objArrToArr($noteObjArrFromDb);
-		return tool\ResponseTool::show(1,'note查询成功',$a);
+		//返回的为多个对象的数组集合。
+		return $noteObjArrFromDb;
+		// $a=tool\ArrToObjTool::objArrToArr($noteObjArrFromDb);
+
+		// return tool\ResponseTool::show(1,'note查询成功',$a);
 		
 	}
 	//获取note信息，一维
@@ -32,18 +35,20 @@ class NoteBLLModel{
 		$userId=$noteBoardObjFromView->userId;
 		$noteBoardId=$this->gNoteBoardId($userId);
 		if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
+		 	return nulll;
+		 //	return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		}
 		$noteNum=$noteBoardId%7;
 
 		$noteDALModel=new DAL\NoteDALModel;
 		$noteObjFromDb=$noteDALModel->selectByNoteId($noteId,$noteNum);
-		if ($noteObjFromDb) {
-			$a=$noteObjFromDb->objToArr();
-			return tool\ResponseTool::show(1,'note查询成功',$a);
-		}else{
-			return tool\ResponseTool::show(410,'note查询失败2',null);
-		}
+		return $noteObjFromDb;
+		// if ($noteObjFromDb) {
+		// 	$a=$noteObjFromDb->objToArr();
+		// 	return tool\ResponseTool::show(1,'note查询成功',$a);
+		// }else{
+		// 	return tool\ResponseTool::show(410,'note查询失败2',null);
+		// }
 		
 	}
 	public function addNote($userId,$noteObjFromView){
@@ -52,7 +57,8 @@ class NoteBLLModel{
 		$noteNum=$noteBoardId%7;
 
 		if ($noteBoardId==null) {
-		 	return tool\ResponseTool::show(410,'noteBoardId寻找失败',null);
+			return null;
+		 //	return tool\ResponseTool::show(410,'noteBoardId寻找失败',null);
 		}
 
 		if ($noteObjFromView->noteBoardId==null) {
@@ -60,19 +66,20 @@ class NoteBLLModel{
 			$noteObjFromView->noteBoardId=$noteBoardId;
 		}else if($noteObjFromView->noteBoardId!=$noteBoardId){
 			//id与useid不匹配
-			return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
+			return null;
+			//return tool\ResponseTool::show(414,'noteBoardId不匹配',null);
 		}
 		$noteObjArr=$noteObjFromView->objToArr();
 		$noteObjArr['noteBoardId']=$noteBoardId;
 		$noteDALModel=new DAL\NoteDALModel;
 		$noteObjFromDb=$noteDALModel->insertNote($noteObjArr,$noteNum);
-
-		if ($noteObjFromDb) {
-	      	return tool\ResponseTool::show(1,'note添加成功',$noteObjFromDb->objToArr());
-		}else{
-			return tool\ResponseTool::show(411,'note添加失败',null);
+		return $noteObjFromDb;
+		// if ($noteObjFromDb) {
+	 //      	return tool\ResponseTool::show(1,'note添加成功',$noteObjFromDb->objToArr());
+		// }else{
+		// 	return tool\ResponseTool::show(411,'note添加失败',null);
 	
-		}
+		// }
 	}
 	public function modifyNote($noteObjFromView){
 
@@ -82,30 +89,33 @@ class NoteBLLModel{
 		$noteNum=$noteBoardId%7;
 		$noteDALModel=new DAL\NoteDALModel;
 		$noteObjFromDb=$noteDALModel->updateByNoteArr($noteObjArr,$noteNum);
-		
-		if ($noteObjFromDb) {
+		return $noteObjFromDb;
+		// if ($noteObjFromDb) {
 
-			return tool\ResponseTool::show(1,'note修改成功',$noteObjFromDb->objToArr());
-		}else{
-			return tool\ResponseTool::show(412,'note修改失败',null);
-		}
+		// 	return tool\ResponseTool::show(1,'note修改成功',$noteObjFromDb->objToArr());
+		// }else{
+		// 	return tool\ResponseTool::show(412,'note修改失败',null);
+		// }
 			
 	
 		
 		
 	}
+	//返回1或者0
 	public function delNote($userId,$noteObjFromView){
+
 		$noteBoardId=$this->gNoteBoardId($userId);
 		$noteNum=$noteBoardId%7;
 		$noteId=$noteObjFromView->noteId;
 		$noteDALModel=new DAL\NoteDALModel;
 		$sign=$noteDALModel->delByNoteId($noteId,$noteNum);
-		if ($sign) {
-			return tool\ResponseTool::show(1,'note删除成功',null);
+		return $sign;
+// 		if ($sign) {
+// 			return tool\ResponseTool::show(1,'note删除成功',null);
 	
 
-		}else{
-			return tool\ResponseTool::show(413,'note删除失败',null);		}
+// 		}else{
+// 			return tool\ResponseTool::show(413,'note删除失败',null);		}
 
-	}
-}
+ 		}
+ }

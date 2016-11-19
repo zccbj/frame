@@ -12,8 +12,14 @@ class NoteController extends \framework\lib\Controller{
 		$noteBoardObj->userId=$userId;
 
 		$noteBLLModel=new BLL\NoteBLLModel;
-		$noteObj=$noteBLLModel->infoNote($noteBoardObj);
-		echo ($noteObj);
+		$noteObjArr=$noteBLLModel->infoNote($noteBoardObj);
+		//返回的是多个对象
+		if ($noteObjArr) {
+			$a=tool\ArrToObjTool::objArrToArr($noteObjArr);
+			echo tool\ResponseTool::show(1,'note查询成功',$a);
+		}else{
+			echo tool\ResponseTool::show(414,'noteBoardId不匹配',null);
+		}
 	}
 	//根据noteid和userid获取一条note
 	public function gNoteByIdAction(){
@@ -23,7 +29,11 @@ class NoteController extends \framework\lib\Controller{
 		$noteBoardObj->userId=$userId;
 		$noteBLLModel=new BLL\NoteBLLModel;
 		$noteObj=$noteBLLModel->infoNoteById($noteBoardObj,$noteId);
-		echo ($noteObj);
+		if ($noteObj) {
+			echo tool\ResponseTool::show(1,'note查询成功',$noteObj->objToArr());
+		}else{
+			echo tool\ResponseTool::show(410,'note查询失败2',null);
+		}
 	}
 	//添加一条note
 	public function aNoteAction(){
@@ -33,8 +43,13 @@ class NoteController extends \framework\lib\Controller{
 		$data['noteDateTime']=date('Y-m-d H:i:s');
 		$noteObj=tool\ArrToObjTool::arrToObj($data,'Note');
 		$noteBLLModel=new BLL\NoteBLLModel;
-		$result=$noteBLLModel->addNote($userId,$noteObj);
-		echo $result;
+		$noteObj=$noteBLLModel->addNote($userId,$noteObj);
+		if ($noteObj) {
+	      	echo tool\ResponseTool::show(1,'note添加成功',$noteObj->objToArr());
+		}else{
+			echo tool\ResponseTool::show(414,'noteBoardId不匹配',null);
+	
+		}
 	}
 	public function uNoteAction(){
 		$data=$_POST['data'];
@@ -43,9 +58,13 @@ class NoteController extends \framework\lib\Controller{
 		$noteObj=tool\ArrToObjTool::arrToObj($data,'Note');
 
 		$noteBLLModel=new BLL\NoteBLLModel;
-		$result=$noteBLLModel->modifyNote($noteObj);
-		echo $result;
+		$noteObj=$noteBLLModel->modifyNote($noteObj);
+		if ($noteObj) {
 
+			echo tool\ResponseTool::show(1,'note修改成功',$noteObj->objToArr());
+		}else{
+			echo tool\ResponseTool::show(412,'note修改失败',null);
+		}
 
 	}
 	public function dNoteAction(){
@@ -56,7 +75,12 @@ class NoteController extends \framework\lib\Controller{
  		$noteObj->noteId=$noteId;
  		$noteBLLModel=new BLL\NoteBLLModel;
  		$result=$noteBLLModel->delNote($userId,$noteObj);
- 		echo $result;
+ 		if ($result) {
+			echo tool\ResponseTool::show(1,'note删除成功',null);
+		}else{
+			echo tool\ResponseTool::show(413,'note删除失败',null);
+		}
+
 
 	}
 }

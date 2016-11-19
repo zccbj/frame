@@ -9,15 +9,15 @@ class NoteBoardBLLModel{
 		$userId=$noteBoardObjModel->userId;
 		$noteBoardDALModel=new DAL\NoteBoardDALModel;
 		$noteBoardObjFromDb=$noteBoardDALModel->selectByUserId($userId);
+		return $noteBoardObjFromDb;
+		// if ($noteBoardObjFromDb) {
+		// 	$noteBoardObjFromDbArr=$noteBoardObjFromDb->objToArr();
+		// 	return tool\ResponseTool::show(1,'noteBoard查询成功',$noteBoardObjFromDbArr);
 		
-		if ($noteBoardObjFromDb) {
-			$noteBoardObjFromDbArr=$noteBoardObjFromDb->objToArr();
-			return tool\ResponseTool::show(1,'noteBoard查询成功',$noteBoardObjFromDbArr);
+		// }else{
+		// 	return tool\ResponseTool::show(408,'noteBoard查询失败',$noteBoardObjFromDb);
 		
-		}else{
-			return tool\ResponseTool::show(408,'noteBoard查询失败',$noteBoardObjFromDb);
-		
-		}
+		// }
 		
 
 	}
@@ -26,14 +26,15 @@ class NoteBoardBLLModel{
 		$noteBoardDALModel=new DAL\NoteBoardDALModel;
 
 		$noteBoardObjFromDb=$noteBoardDALModel->updateNoteBoard($noteBoardArr);
-		if ($noteBoardObjFromDb) {
-			$noteBoardObjFromDbArr=$noteBoardObjFromDb->objToArr();
-			return tool\ResponseTool::show(1,'noteBoard修改成功',$noteBoardObjFromDbArr->objToArr());
+		return $noteBoardObjFromDb;
+		// if ($noteBoardObjFromDb) {
+		// 	$noteBoardObjFromDbArr=$noteBoardObjFromDb->objToArr();
+		// 	return tool\ResponseTool::show(1,'noteBoard修改成功',$noteBoardObjFromDbArr->objToArr());
 		
-		}else{
-			return tool\ResponseTool::show(409,'noteBoard修改失败',$noteBoardObjFromDb);
+		// }else{
+		// 	return tool\ResponseTool::show(409,'noteBoard修改失败',$noteBoardObjFromDb);
 		
-		}
+		// }
 		
 		
 

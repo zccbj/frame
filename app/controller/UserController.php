@@ -28,8 +28,12 @@ class UserController extends \framework\lib\Controller{
 		$userFromView->addCity=$data->addCity;
 		$userBLLModel=new BLL\UserBLLModel;
 
-		$result=$userBLLModel->modifyUser($userFromView);
-		echo $result;
+		$userObj=$userBLLModel->modifyUser($userFromView);
+		if ($userObj) {
+			echo tool\ResponseTool::show(1,'user修改成功',$userObj->objToArr());
+		}else{
+			echo tool\ResponseTool::show(406,'修改失败',NULL);
+		}
 
 	}
 	/**查询user信息
@@ -40,8 +44,13 @@ class UserController extends \framework\lib\Controller{
 		$userFromView=new OBJ\UserObjModel;
 		$userFromView->userId=$userId;
 		$userBLLModel=new BLL\UserBLLModel;
-		$result=$userBLLModel->infoUser($userFromView);
-		echo $result;
+		$userObj=$userBLLModel->infoUser($userFromView);
+		if ($userObj) {
+			echo tool\ResponseTool::show(1,'user查询成功',$userObj->objToArr());
+		}else{
+			//查无此人
+			echo tool\ResponseTool::show(405,'此用户不存在',NULL);
+		}
 	}
 	//根据用户userId修改nickName或userIntro
 	public function modifyoneAction(){
@@ -53,8 +62,12 @@ class UserController extends \framework\lib\Controller{
 		$userFromView->nickName=$nickName;
 		$userFromView->userIntro=$userIntro;
 		$userBLLModel=new BLL\UserBLLModel;
-		$result=$userBLLModel->modifyUser($userFromView);
-		echo $result;
+		$userObj=$userBLLModel->modifyUser($userFromView);
+		if ($userObj) {
+			echo  tool\ResponseTool::show(1,'user修改成功',$userObj->objToArr());
+		}else{
+			echo  tool\ResponseTool::show(406,'修改失败',NULL);
+		}
 	}
 	
 }
